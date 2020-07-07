@@ -1,5 +1,6 @@
 <template>
     <div id="list">
+        <router-link to="/add-customer" class="btn btn-primary float-right">Add Customer</router-link>
         <table class="table">
             <thead>
                 <tr>
