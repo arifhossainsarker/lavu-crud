@@ -2002,7 +2002,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.$store.dispatch("allCustomers");
+  },
+  computed: {
+    getAllCustomer: function getAllCustomer() {
+      return this.$store.getters.getCustomer;
+    }
+  },
+  methods: {}
+});
 
 /***/ }),
 
@@ -37677,7 +37687,37 @@ var render = function() {
         [_vm._v("Add Customer")]
       ),
       _vm._v(" "),
-      _vm._m(0)
+      _c("table", { staticClass: "table" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.getAllCustomer, function(customer, index) {
+            return _c("tr", { key: index }, [
+              _c("th", { attrs: { scope: "row" } }, [
+                _vm._v(_vm._s(index + 1))
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(customer.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(customer.email))]),
+              _vm._v(" "),
+              _c("td", [
+                _c("img", {
+                  attrs: {
+                    src: customer.photo,
+                    height: "100px",
+                    width: "100px"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm._m(1, true)
+            ])
+          }),
+          0
+        )
+      ])
     ],
     1
   )
@@ -37687,33 +37727,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table" }, [
-      _c("thead", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Sl")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("email")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Photo")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Sl")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("email")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Photo")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("a", { staticClass: "btn-info", attrs: { href: "#" } }, [
+        _vm._v("Edit")
       ]),
-      _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Mark")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Otto")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("@mdo")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("@mdo")])
-        ])
+      _vm._v(" || "),
+      _c("a", { staticClass: "btn-danger", attrs: { href: "#" } }, [
+        _vm._v("Delete")
       ])
     ])
   }
@@ -54521,10 +54559,26 @@ var routes = [{
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  state: {},
-  getters: {},
-  actions: {},
-  mutations: {}
+  state: {
+    customer: []
+  },
+  getters: {
+    getCustomer: function getCustomer(state) {
+      return state.customer;
+    }
+  },
+  actions: {
+    allCustomers: function allCustomers(context) {
+      axios.get('/customers').then(function (response) {
+        context.commit('all_customer', response.data.customers);
+      });
+    }
+  },
+  mutations: {
+    all_customer: function all_customer(state, data) {
+      return state.customer = data;
+    }
+  }
 });
 
 /***/ }),

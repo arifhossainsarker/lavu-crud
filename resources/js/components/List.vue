@@ -12,12 +12,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
+                <tr v-for="(customer, index) in getAllCustomer" :key="index">
+                    <th scope="row">{{ index+1 }}</th>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td><img :src="customer.photo" height="100px" width="100px" /></td>
+                    <td><a href="#" class="btn-info">Edit</a> || <a href="#" class="btn-danger">Delete</a></td>
                 </tr>
             </tbody>
         </table>
@@ -26,6 +26,17 @@
 
 <script>
     export default {
-        
+        mounted(){
+            this.$store.dispatch("allCustomers")
+        },
+
+        computed:{
+            getAllCustomer(){
+                return this.$store.getters.getCustomer
+            }
+        },
+        methods:{
+
+        }
     }
 </script>
