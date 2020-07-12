@@ -17,7 +17,7 @@
                     <td>{{ customer.name }}</td>
                     <td>{{ customer.email }}</td>
                     <td><img :src="customer.photo" height="100px" width="100px" /></td>
-                    <td><a href="#" class="btn-info">Edit</a> || <a href="#" class="btn-danger">Delete</a></td>
+                    <td><a href="#" class="btn-info">Edit</a> || <a href="" class="btn-danger" @click.prevent="deleteCustomer(customer.id)">Delete</a></td>
                 </tr>
             </tbody>
         </table>
@@ -36,7 +36,12 @@
             }
         },
         methods:{
-
+            deleteCustomer(id){
+                axios.get('/deletecustomer/'+id)
+                    .then(()=>{
+                        this.$store.dispatch("allCustomers")
+                    })
+            }
         }
     }
 </script>

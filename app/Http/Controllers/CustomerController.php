@@ -37,4 +37,15 @@ class CustomerController extends Controller
         $customer->photo = $name;
         $customer->save();
     }
+
+    public function delete_customer($id){
+        $customer = Customer::FindorFail($id);
+        $image_path = public_path()."/uploadimage/";
+        $image = $image_path. $customer->photo;
+        if(file_exists($image)){
+            @unlink($image);
+        }
+
+        $customer->delete();
+    }
 }

@@ -27,3 +27,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/customers', 'CustomerController@all_customer');
 
 Route::post('/savecustomer', 'CustomerController@save_customer');
+
+Route::get('/deletecustomer/{id}', 'CustomerController@delete_customer');
