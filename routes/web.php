@@ -29,3 +29,7 @@ Route::get('/customers', 'CustomerController@all_customer');
 Route::post('/savecustomer', 'CustomerController@save_customer');
 
 Route::get('/deletecustomer/{id}', 'CustomerController@delete_customer');
+
+Route::get('/customer/{id}', 'CustomerController@single_customer');
+
+Route::post('/updatepost/{id}', 'CustomerController@update_customer');

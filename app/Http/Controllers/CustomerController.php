@@ -48,4 +48,35 @@ class CustomerController extends Controller
 
         $customer->delete();
     }
+
+    public function single_customer($id){
+        $customer = Customer::FindorFail($id);
+
+        return response()->json([
+            'customer' => $customer
+        ], 200);
+    }
+
+    public function update_customer(Request $request, $id){
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'photo' => 'required'
+        ]);
+        $customer = Customer::FindorFail($id);
+
+        $strpos = strpos($request->photo, ';');
+        $sub = substr($request->photo, 0, $strpos);
+        $ex = explode('/', $sub)[1];
+        $name = time().".".$ex;
+        $image = Image::make($request->photo)->resize(200, 200);
+        $upload_path = public_path()."/uploadimage/";
+        $image->save($upload_path.$name);
+        
+        
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->photo = $name;
+        $customer->save();
+    }
 }
